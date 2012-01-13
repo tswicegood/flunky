@@ -92,11 +92,11 @@ defaults to use in many of the places.  Flunky has the ability to use different
 templates using the ``--template`` parameter.
 
 You can see a list of all of the installed templates by running 
-``flunky list-templates`` from the command line like this:
+``flunky --list-templates`` from the command line like this:
 
 ::
 
-    $ flunk list-templates
+    $ flunk --list-templates
     Installed Flunky Templates
 
     simple        Simple Python package
