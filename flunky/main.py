@@ -24,25 +24,32 @@ def main():
         parser.print_usage()
 
 
-def list_of_templates(sorted=False):
-    templates = {}
-    for entry_point in iter_entry_points(group="flunky.templates"):
-        # TODO: is this needed?
-        if entry_point.name in templates:
-            continue
+class Template(object):
+    def __init__(self, entry_point):
+        self.entry_point = entry_point
+        self.template = entry_point.load()
 
-        m = entry_point.load()
-        templates[entry_point.name] = {
-            "description": m.__doc__.strip(),
-            "path": m.__path__[0],
-        }
-    # TODO: add ability to sort list
-    return templates
+    @property
+    def name(self):
+        return self.entry_point.name
+
+    @property
+    def description(self):
+        return self.template.__doc__.strip()
+
+    @property
+    def path(self):
+        return self.template.__path__[0]
+
+
+def list_of_templates():
+    for entry_point in iter_entry_points(group="flunky.templates"):
+        yield Template(entry_point)
 
 
 def display_installed_templates():
-    templates = list_of_templates(sorted=True)
+    templates = list_of_templates()
     textui.puts("Installed Flunky Templates")
     with textui.indent(2):
-        for template, data in templates.items():
-            textui.puts("%s - %s" % (template.ljust(10), data["description"]))
+        for template in list_of_templates():
+            textui.puts("%s - %s" % (template.name.ljust(10), template.description))
