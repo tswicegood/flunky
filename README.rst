@@ -1,5 +1,5 @@
-Flunk
-=====
+Flunky
+======
 Welcome to Flunky, your assistant to help build Python packages
 
 Building Python packages successfully requires using a bunch of poorly
