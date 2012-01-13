@@ -2,7 +2,7 @@
 	"name": "flunky",
 	"description": "Your very own flunky for building Python packages",
 	"entry_points": {
-		"console_scripts": ["flunky=flunk.main:main"]
+		"console_scripts": ["flunky=flunky.main:main"]
 	},
 	"author": "Travis Swicegood",
 	"author_email": "travis@domain51.com",
