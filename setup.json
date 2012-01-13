@@ -1,0 +1,14 @@
+{
+	"name": "flunky",
+	"description": "Your very own flunky for building Python packages",
+	"entry_points": {
+		"console_scripts": ["flunky=flunk.main:main"]
+	},
+	"author": "Travis Swicegood",
+	"author_email": "travis@domain51.com",
+	"classifiers": [
+		"Development Status :: 3 - Alpha",
+		"Topic :: Utilities"
+	],
+	"url": "https://github.com/tswicegood/flunky"
+}
