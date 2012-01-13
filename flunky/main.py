@@ -1,39 +1,48 @@
 import argparse
+from clint import textui
 from pkg_resources import iter_entry_points
 import sys
 
-import flunky
+from . import version
 
-ENTRY_POINT = "flunky.commands"
+
+parser = argparse.ArgumentParser(
+        description="Because everyone wants a flunky")
+parser.add_argument("--version", action="version", version=version())
+parser.add_argument("package", nargs="?",
+                    help="Name of the package you want to create")
+parser.add_argument("--list-templates", action="store_true",
+                    help="List all installed templates")
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Choose subcommand to run.')
-    parser.add_argument('--version', action='version', version='%%(prog)s version %s' % flunky.__version__)
-    subparsers = parser.add_subparsers(title='subcommands')
-
-    loaded = {}
-    for ep in iter_entry_points(group=ENTRY_POINT):
-        # TODO: needed?
-        if ep.name in loaded:
-            continue
-        loaded[ep.name] = True
-        command = ep.load()
-        # TODO: summary v full help text?
-        command_subparser = subparsers.add_subparsers(ep.name,
-                description=command.__doc__,
-                help=command.__doc__)
-        if hasattr(command, "build_parser"):
-            command.build_parser(command_subparser)
-        command_subparser.set_default(func=command)
-
     args, argv = parser.parse_known_args()
-    kwargs = vars(args)
-    # TODO: can this be None?  What should happen when it is?
-    func = kwargs.pop('func', None)
-    if argv:
-        func(argv=argv, **kwargs)
-    else:
-        func(**kwargs)
+    if args.list_templates:
+        return display_installed_templates()
+
+    if not args.package:
+        parser.print_usage()
 
 
+def list_of_templates(sorted=False):
+    templates = {}
+    for entry_point in iter_entry_points(group="flunky.templates"):
+        # TODO: is this needed?
+        if entry_point.name in templates:
+            continue
+
+        m = entry_point.load()
+        templates[entry_point.name] = {
+            "description": m.__doc__.strip(),
+            "path": m.__path__[0],
+        }
+    # TODO: add ability to sort list
+    return templates
+
+
+def display_installed_templates():
+    templates = list_of_templates(sorted=True)
+    textui.puts("Installed Flunky Templates")
+    with textui.indent(2):
+        for template, data in templates.items():
+            textui.puts("%s - %s" % (template.ljust(10), data["description"]))

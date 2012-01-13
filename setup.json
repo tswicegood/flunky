@@ -2,8 +2,15 @@
 	"name": "flunky",
 	"description": "Your very own flunky for building Python packages",
 	"entry_points": {
-		"console_scripts": ["flunky=flunky.main:main"]
+		"console_scripts": ["flunky=flunky.main:main"],
+		"flunky.templates": [
+			"basic=flunky.templates.basic",
+			"django-app=flunky.templates.django_app"
+		]
 	},
+	"install_requires": [
+		"clint==0.3.0"
+	],
 	"author": "Travis Swicegood",
 	"author_email": "travis@domain51.com",
 	"classifiers": [
