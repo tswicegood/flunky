@@ -8,7 +8,7 @@ you expect.  We don't need the hassle---we just need a way to easily
 create and deploy our packages.
 
 Flunky helps you by creating a package sleketon for you.  It adds a generic
-``setup.py`` and uses a ``setup.json`` file to handle configuring the name
+``setup.py`` and uses a ``package.json`` file to handle configuring the name
 of your package, your dependencies, and so on.
 
 .. warning:: This document is speculative until this warning is removed.  Proceed with caution until that point.
@@ -53,7 +53,7 @@ package and the skeleton necessary to make it installable.
     |-LICENSE
     |-MANIFEST.in
     |-README.rst
-    |-setup.json
+    |-package.json
     |-setup.py
     `-runtests.py
 
@@ -74,7 +74,7 @@ the `documentation`_.
 The ``README.rst`` contains a skeleton for your package.  You need to edit it
 to add the information on how to use your package.
 
-``setup.json`` contains the metadata describing your new package.  You need to
+``package.json`` contains the metadata describing your new package.  You need to
 edit this file to adjust the values for your name, and so on.  You can
 configure global defaults for this (see `Configuring Defaults`_).
 

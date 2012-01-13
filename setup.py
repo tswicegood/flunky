@@ -11,7 +11,7 @@ from distutils.core import setup
 import json
 import os
 
-info = json.load(open("./setup.json"))
+info = json.load(open("./package.json"))
 
 
 def convert_to_str(d):
