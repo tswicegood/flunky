@@ -83,9 +83,18 @@ for dirpath, dirnames, filenames in os.walk(project_dir):
             del dirnames[i]
     if '__init__.py' in filenames:
         packages.append('.'.join(fullsplit(dirpath)))
-    elif filenames:
-        data_files.append([dirpath, [os.path.join(dirpath, f)
-                for f in filenames]])
+
+    # This is different than Django's implementation -- we want to include
+    # non-Python files as data files
+
+    # Strip off the length of the package name plus the trailing slash
+    prefix = dirpath[len(info["name"]) + 1:]
+    for f in filenames:
+        # Ignore all dot files and any compiled
+        if not (f == "." or f == ".." or
+                f.endswith(".pyc") or
+                f.endswith(".py")):
+            data_files.append(os.path.join(prefix, f))
 
 setup_kwargs = {
     "packages": packages,
