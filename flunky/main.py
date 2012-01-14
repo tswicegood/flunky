@@ -8,7 +8,7 @@ from . import version
 
 parser = argparse.ArgumentParser(
         description="Because everyone wants a flunky")
-parser.add_argument("--version", action="version", version=version())
+parser.add_argument("--version", action="version", version=version)
 parser.add_argument("package", nargs="?",
                     help="Name of the package you want to create")
 parser.add_argument("--list-templates", action="store_true",
